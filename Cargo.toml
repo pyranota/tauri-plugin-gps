@@ -1,0 +1,17 @@
+[package]
+name = "tauri-plugin-gps"
+version = "0.0.0"
+authors = [ "You" ]
+description = ""
+edition = "2021"
+rust-version = "1.70"
+exclude = ["/examples", "/webview-dist", "/webview-src", "/node_modules"]
+links = "tauri-plugin-gps"
+
+[dependencies]
+tauri = { version = "2.0.0-beta.20" }
+serde = "1.0"
+thiserror = "1.0"
+
+[build-dependencies]
+tauri-plugin = { version = "2.0.0-beta.16", features = ["build"] }
