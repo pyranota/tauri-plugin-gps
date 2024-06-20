@@ -1,54 +1,31 @@
 <script>
-  import Greet from './lib/Greet.svelte'
-  import { execute } from 'tauri-plugin-gps-api'
-
-	let response = ''
-
-	function updateResponse(returnValue) {
-		response += `[${new Date().toLocaleTimeString()}]` + (typeof returnValue === 'string' ? returnValue : JSON.stringify(returnValue)) + '<br>'
-	}
-
-	function _execute() {
-		execute().then(updateResponse).catch(updateResponse)
-	}
+  import { MapLibre, DefaultMarker } from "svelte-maplibre";
+  let marker = {
+    lon: 13.413244,
+    lat: 52.521992,
+  };
 </script>
 
-<main class="container">
-  <h1>Welcome to Tauri!</h1>
-
-  <div class="row">
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo vite" alt="Vite Logo" />
-    </a>
-    <a href="https://tauri.app" target="_blank">
-      <img src="/tauri.svg" class="logo tauri" alt="Tauri Logo" />
-    </a>
-    <a href="https://svelte.dev" target="_blank">
-      <img src="/svelte.svg" class="logo svelte" alt="Svelte Logo" />
-    </a>
-  </div>
-
-  <p>
-    Click on the Tauri, Vite, and Svelte logos to learn more.
-  </p>
-
-  <div class="row">
-    <Greet />
-  </div>
-
-  <div>
-    <button on:click="{_execute}">Execute</button>
-    <div>{@html response}</div>
-  </div>
-
-</main>
+<MapLibre
+  center={[13.413244, 52.521992]}
+  zoom={14}
+  class="map"
+  style="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+  interactive = {false}
+  bearing={190}
+>
+  <!-- Unlike the custom marker example, default markers do not have mouse events,
+    and popups only support the default openOn="click" behavior -->
+  <DefaultMarker lngLat={marker} draggable>
+  </DefaultMarker>
+</MapLibre>
 
 <style>
-  .logo.vite:hover {
-    filter: drop-shadow(0 0 2em #747bff);
-  }
 
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00);
+  :global(.map) {
+    height: 100vh;
+  }
+  :global(*){
+    margin: 0px;
   }
 </style>
